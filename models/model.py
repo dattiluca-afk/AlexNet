@@ -7,7 +7,7 @@ class AlexNet(nn.Module):
 
         super(AlexNet,self).__init__()
 
-        self.conv1 = nn.Conv2d(3, 96, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(3, 96, kernel_size=11, stride=4)
 
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2)
 
