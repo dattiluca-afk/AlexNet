@@ -9,6 +9,7 @@ from models.model import AlexNet
 from dataset.dataset import prepare_data, get_dataloaders
 
 def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
+    
     model.train()
     running_loss = 0.0
     correct = 0

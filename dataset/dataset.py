@@ -54,6 +54,7 @@ def get_dataloaders(batch_size=32, num_workers=4):
     ])
     
     val_transform = T.Compose([
+        T.Resize((227,227)),
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
