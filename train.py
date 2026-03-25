@@ -9,7 +9,7 @@ from models.model import AlexNet
 from dataset.dataset import prepare_data, get_dataloaders
 
 def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
-    
+
     model.train()
     running_loss = 0.0
     correct = 0
@@ -41,11 +41,11 @@ def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
         if batch_idx%100 == 0:
             print(f" batch: {batch_idx}/{len(train_loader)} ; loss: {loss.item(): .4f}")
 
-        avg_loss = running_loss / len(train_loader)
-        acc = 100. * correct / total
-        print(f'Train Results: Loss: {avg_loss:.6f} | Acc: {acc:.2f}%')
+    avg_loss = running_loss / len(train_loader)
+    acc = 100. * correct / total
+    print(f'Train Results: Loss: {avg_loss:.6f} | Acc: {acc:.2f}%')
         
-        return avg_loss, acc
+    return avg_loss, acc
     
 def validate(model, val_loader, criterion, device):   
 
