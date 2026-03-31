@@ -7,7 +7,8 @@ class AlexNet(nn.Module):
 
         super(AlexNet,self).__init__()
 
-        self.conv1 = nn.Conv2d(3, 96, kernel_size=11, padding=1.5, stride=4) 
+        self.conv1 = nn.Conv2d(3, 96, kernel_size=11, stride=4) 
+        #Remember to change batch resize to 227x227 before executing alexnet
         
         # why 11x11 kernel? To capture a good portion of the image, 
         # along with the necessity to reduce dimensionality (stride = 4) due to
