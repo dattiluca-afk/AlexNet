@@ -41,7 +41,7 @@ than a shallow network, because it can always just choose to "do nothing" and pa
 
 '''
 class BasicBlock(nn.Module):
-    
+
     def __init__(self, in_channels, out_channels, stride=1):
         
         super(BasicBlock,self).__init__()
@@ -80,7 +80,7 @@ class ResNet18(nn.Module):
         
         self.conv1 = nn.Conv2d(3,64, kernel_size=3, stride=1, padding=1, bias=False) 
         self.bn1 = nn.BatchNorm2d(64)
-        self.ReLU = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU(inplace=True)
 
         self.layer1 = self._make_layer(BasicBlock,64,2,stride=1)
         self.layer2 = self._make_layer(BasicBlock, 128, 2, stride=2)
