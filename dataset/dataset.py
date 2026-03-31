@@ -48,7 +48,7 @@ def prepare_data():
 
 def get_dataloaders(batch_size=32, num_workers=4):
     train_transform = T.Compose([
-        T.Resize((227, 227)),  # Resize images to match AlexNet input
+        T.Resize((224, 224)),  # Resize images to match AlexNet input
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
