@@ -5,7 +5,7 @@ import torch.optim as optim
 
 # Local modules' import
 
-from models.alexnet import AlexNet
+from models.resnet import ResNet18
 from dataset.dataset import prepare_data, get_dataloaders
 
 def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
@@ -85,7 +85,7 @@ def main():
 
     # 3. Model initialization
 
-    model = AlexNet().to(device)
+    model = ResNet18().to(device)
 
     criterion = nn.CrossEntropyLoss()
 
