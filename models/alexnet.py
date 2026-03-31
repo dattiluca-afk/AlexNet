@@ -7,14 +7,14 @@ class AlexNet(nn.Module):
 
         super(AlexNet,self).__init__()
 
-        self.conv1 = nn.Conv2d(3, 96, kernel_size=11, stride=4) 
+        self.conv1 = nn.Conv2d(3, 96, kernel_size=11, padding=1.5, stride=4) 
         
         # why 11x11 kernel? To capture a good portion of the image, 
         # along with the necessity to reduce dimensionality (stride = 4) due to
         # hardware constraints:
 
         #  kernel size = 11 and stride = 4 outputs a : 
-        # ( Width (or Height) - Kernel + 2 * Padding )/S + 1. In our case (227-11)/4 + 1 = 55 !
+        # ( Width (or Height) - Kernel + 2 * Padding )/S + 1. In our case (22-11)/4 + 1 = 55 !
 
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2)
 

@@ -5,7 +5,7 @@ import torch.optim as optim
 
 # Local modules' import
 
-from models.model import AlexNet
+from models.alexnet import AlexNet
 from dataset.dataset import prepare_data, get_dataloaders
 
 def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
