@@ -59,17 +59,16 @@ class BasicBlock(nn.Module):
                 nn.BatchNorm2d(out_channels)
             )
 
-        def forward(self,x):
+    def forward(self,x):
 
-            out = self.conv1(x) 
-            out = self.bn1(out)
-            out = self.relu(out)
-            out = self.conv2(out)
-            out = self.bn2(out)
-            out += self.shortcut(x)
-            out = self.relu(out)
+        out = self.conv1(x) 
+        out = self.bn1(out)
+        out = self.conv2(out)
+        out = self.bn2(out)
+        out += self.shortcut(x)
+        out = self.relu(out)
 
-            return out
+        return out
 
 class ResNet18(nn.Module):
     def __init__(self, num_classes=200):
