@@ -32,7 +32,10 @@ out = out + identity
 
 # 4. Final touch
 out = relu(out)
-Why does this work?If those convolution layers in Step 2 are "bad" or haven't learned anything yet, 
+
+Why does this work?
+
+If those convolution layers in Step 2 are "bad" or haven't learned anything yet, 
 they will likely output something close to 0 (because weights are usually initialized to values very close to 0)
 In a normal network: $Output = 0$ (The network "dies" or loses the data).
 In a ResNet: $Output = 0 + x$. (The data survives! The network just passes the original image to the next layer).
@@ -45,6 +48,7 @@ class BasicBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
         
         super(BasicBlock,self).__init__()
+
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
 
         self.bn1 = nn.BatchNorm2d(out_channels)
@@ -78,10 +82,12 @@ class ResNet18(nn.Module):
  
         self.in_channels = 64
         
-        self.conv1 = nn.Conv2d(3,64, kernel_size=3, stride=1, padding=1, bias=False) 
-        self.bn1 = nn.BatchNorm2d(64)
+        self.conv1 = nn.Conv2d(3,64, kernel_size=3, stride=1, padding=1, bias=False) # 224x224 --> 224x224
+
+        self.bn1 = nn.BatchNorm2d(64) 
         self.relu = nn.ReLU(inplace=True)
 
+        
         self.layer1 = self._make_layer(BasicBlock,64,2,stride=1)
         self.layer2 = self._make_layer(BasicBlock, 128, 2, stride=2)
         self.layer3 = self._make_layer(BasicBlock, 256,2, stride=2)
