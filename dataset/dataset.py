@@ -48,6 +48,9 @@ def prepare_data():
 
 def get_dataloaders(batch_size=32, num_workers=4):
     train_transform = T.Compose([
+        T.RandomHorizontalFlip(),
+        T.RandomRotation(15),
+        T.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
