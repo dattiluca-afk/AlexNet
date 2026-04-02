@@ -4,7 +4,8 @@ import torch.nn.functional as F
 
 class ResNet18(nn.Module):
     def __init__(self, num_classes=200):
-        super(ResNet18, self).__init__()
+        
+        super().__init__()
 
         self.conv1 = nn.Conv2d(in_channels=3,out_channels=64,kernel_size=7,stride=2, padding=3) # CH: 3 -> 64; W: 224 -> 112
         
@@ -12,7 +13,7 @@ class ResNet18(nn.Module):
 
         self.relu = nn.ReLU(inplace=True)
 
-        self.mp = nn.MaxPool2d(kernel_size=3, stride=2, padding=1) # CH: 64; W: 112 -> 56
+        self.mp = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)# CH: 64; W: 112 -> 56
 
         self.block1 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=64,kernel_size=3,stride=1,padding=1), # CH: 64 -> 128, W: 56

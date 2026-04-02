@@ -47,7 +47,7 @@ class BasicBlock(nn.Module):
 
     def __init__(self, in_channels, out_channels, stride=1):
         
-        super(BasicBlock,self).__init__()
+        super().__init__()
 
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
 
@@ -78,7 +78,7 @@ class BasicBlock(nn.Module):
 class ResNet18(nn.Module):
     def __init__(self, num_classes=200):
 
-        super(ResNet18,self).__init__()
+        super().__init__()
  
         self.in_channels = 64
         
