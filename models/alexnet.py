@@ -5,7 +5,7 @@ import torch.nn.functional as F
 class AlexNet(nn.Module):
     def __init__(self, num_classes=200):
 
-        super(AlexNet,self).__init__()
+        super().__init__()
 
         self.conv1 = nn.Conv2d(3, 96, kernel_size=11, stride=4) 
         #Remember to change batch resize to 227x227 before executing alexnet
