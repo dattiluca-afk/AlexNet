@@ -3,9 +3,13 @@ from torch import nn
 import torch.nn.functional as F
 
 class ResNet18(nn.Module):
+
     def __init__(self, num_classes=200):
         
         super().__init__()
+
+        '''
+        That'd be good if images were 224x225. TinyImagnet's images are 64x64        
 
         self.conv1 = nn.Conv2d(in_channels=3,out_channels=64,kernel_size=7,stride=2, padding=3) # CH: 3 -> 64; W: 224 -> 112
         
@@ -13,13 +17,20 @@ class ResNet18(nn.Module):
 
         self.relu = nn.ReLU(inplace=True)
 
-        self.mp = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)# CH: 64; W: 112 -> 56
+        self.mp = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)# CH: 64; W: 112 -> 56 
+        '''
+
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)
+
+        # REMOVE maxpool completely
 
         self.block1 = nn.Sequential(
-            nn.Conv2d(in_channels=64, out_channels=64,kernel_size=3,stride=1,padding=1), # CH: 64 -> 128, W: 56
+            nn.Conv2d(in_channels=64, out_channels=64,kernel_size=3,stride=1,padding=1),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3,stride=1,padding=1), # CH: 128 -> 128, W: 56
+            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3,stride=1,padding=1), 
             nn.BatchNorm2d(64)
         )
 
@@ -30,10 +41,10 @@ class ResNet18(nn.Module):
         )
 
         self.block2 = nn.Sequential(
-            nn.Conv2d(in_channels=64, out_channels=128,kernel_size=3,stride=2,padding=1), # CH: 64 -> 128; W: 28
+            nn.Conv2d(in_channels=64, out_channels=128,kernel_size=3,stride=2,padding=1), 
             nn.BatchNorm2d(128),
             nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=128, out_channels=128,kernel_size=3,stride=1,padding=1), # CH: 128 -> 128; W: 28
+            nn.Conv2d(in_channels=128, out_channels=128,kernel_size=3,stride=1,padding=1), 
             nn.BatchNorm2d(128)
         )
         
@@ -43,10 +54,10 @@ class ResNet18(nn.Module):
         )
 
         self.block3 = nn.Sequential(
-            nn.Conv2d(in_channels=128, out_channels=256,kernel_size=3,stride=2 ,padding=1), # CH: 128 -> 256;  W: 14
+            nn.Conv2d(in_channels=128, out_channels=256,kernel_size=3,stride=2 ,padding=1), 
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=256, out_channels=256,kernel_size=3,stride=1,padding=1), # CH: 256 -> 256; W: 14
+            nn.Conv2d(in_channels=256, out_channels=256,kernel_size=3,stride=1,padding=1),
             nn.BatchNorm2d(256)
         )
 
@@ -56,10 +67,10 @@ class ResNet18(nn.Module):
         )
 
         self.block4 = nn.Sequential(
-            nn.Conv2d(in_channels= 256, out_channels=512,kernel_size=3,stride=2,padding=1), # CH: 256 -> 512; W: 7
+            nn.Conv2d(in_channels= 256, out_channels=512,kernel_size=3,stride=2,padding=1),
             nn.BatchNorm2d(512),
             nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=512, out_channels=512,kernel_size=3,stride=1,padding=1), # CH: 512 -> 512; W: 7
+            nn.Conv2d(in_channels=512, out_channels=512,kernel_size=3,stride=1,padding=1), 
             nn.BatchNorm2d(512)
         )
 
@@ -68,11 +79,18 @@ class ResNet18(nn.Module):
         self.fc = nn.Linear(512,num_classes)
 
     def forward(self, x):
-
+      
+        '''
         out = self.conv1(x)
         out = self.bn1(out)
         out = self.relu(out)
         out = self.mp(out)
+        '''
+        
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+        # NO maxpool
         
         # first block 
 
