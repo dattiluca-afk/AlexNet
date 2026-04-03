@@ -141,7 +141,8 @@ def main():
             "train_loss": train_loss,
             "train_acc": train_acc,
             "val_loss": val_loss,
-            "val_acc": val_acc
+            "val_acc": val_acc,
+            "model_lr": optimizer.param_groups[0]['lr']
         })
 
     print(f"\n Training completed. Best validation accuracy: {best_acc}")
