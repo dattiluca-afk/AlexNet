@@ -70,7 +70,7 @@ def validate(model, val_loader, criterion, device):
     acc = 100. * correct / total
     print(f'Validation Results: Loss: {avg_loss:.6f} | Acc: {acc:.2f}%')
 
-    return acc
+    return avg_loss, acc
 
 def main(): 
      
@@ -125,7 +125,7 @@ def main():
         
         train_loss, train_acc = train_one_epoch(epoch,model,train_loader,criterion,optimizer,device)
 
-        val_acc = validate(model, val_loader, criterion, device)
+        val_loss, val_acc= validate(model, val_loader, criterion, device)
 
         scheduler.step(val_acc)
 
@@ -140,6 +140,7 @@ def main():
             "epoch": epoch,
             "train_loss": train_loss,
             "train_acc": train_acc,
+            "val_loss": val_loss,
             "val_acc": val_acc
         })
 
