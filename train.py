@@ -2,11 +2,14 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+import wandb
 
 # Local modules' import
 
 from models.resnet2 import ResNet18
 from dataset.dataset import prepare_data, get_dataloaders
+
+WANDB_KEY = "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"
 
 def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
 
@@ -91,10 +94,30 @@ def main():
 
     optimizer = optim.Adam(model.parameters(), lr= 0.001, weight_decay=1e-4)
 
-    scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
+    scheduler = ReduceLROnPlateau(optimizer, "max", patience=3,)
 
     # I' monitoring validation accuracy. I set scheduler criterion on "max", since the 
     # bigger the val accuracy's values, the better.
+
+    # 4. Initialize wandb
+
+    wandb.init(
+
+        project="naive-resnet18-tiny-imagenet",
+
+        config={
+            "learning_rate": 0.001,
+            "architecture": "ResNet18",
+            "dataset": "TinyImageNet",
+            "epochs": 10,
+            "batch_size": 64,
+            "optimizer": "Adam",
+            "weight_decay": 1e-4,
+            "scheduler_patience": 3,
+            "scheduler_factor": 0.1
+
+        }
+    )
 
     best_acc = 0
 
@@ -102,7 +125,7 @@ def main():
 
     for epoch in range(1,num_epochs+1):
         
-        train_one_epoch(epoch,model,train_loader,criterion,optimizer,device)
+        train_loss, train_acc = train_one_epoch(epoch,model,train_loader,criterion,optimizer,device)
 
         val_acc = validate(model, val_loader, criterion, device)
 
@@ -112,6 +135,15 @@ def main():
             print(f"new best accuracy")
             best_acc = val_acc
             torch.save(model.state_dict(),'model_best.pth')
+
+
+    #   Log metrics every epoch
+        wandb.log({
+            "epoch": epoch,
+            "train_loss": train_loss,
+            "train_acc": train_acc,
+            "val_acc": val_acc
+        })
 
     print(f"\n Training completed. Best validation accuracy: {best_acc}")
 
