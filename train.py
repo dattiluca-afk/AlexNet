@@ -91,7 +91,10 @@ def main():
 
     optimizer = optim.Adam(model.parameters(), lr= 0.001, weight_decay=1e-4)
 
-    scheduler = ReduceLROnPlateau(optimizer, "min", patience=3)
+    scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
+
+    # I' monitoring validation accuracy. I set scheduler criterion on "max", since the 
+    # bigger the val accuracy's values, the better.
 
     best_acc = 0
 
