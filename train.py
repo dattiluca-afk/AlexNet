@@ -1,7 +1,7 @@
 import torch 
 import torch.nn as nn
 import torch.optim as optim
-
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 # Local modules' import
 
@@ -91,6 +91,8 @@ def main():
 
     optimizer = optim.Adam(model.parameters(), lr= 0.001, weight_decay=1e-4)
 
+    scheduler = ReduceLROnPlateau(optimizer, "min", patience=3)
+
     best_acc = 0
 
     num_epochs = 10
@@ -100,6 +102,8 @@ def main():
         train_one_epoch(epoch,model,train_loader,criterion,optimizer,device)
 
         val_acc = validate(model, val_loader, criterion, device)
+
+        scheduler.step(val_acc)
 
         if val_acc > best_acc:
             print(f"new best accuracy")
