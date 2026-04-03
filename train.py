@@ -9,8 +9,6 @@ import wandb
 from models.resnet2 import ResNet18
 from dataset.dataset import prepare_data, get_dataloaders
 
-WANDB_KEY = "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"
-
 def train_one_epoch(epoch, model, train_loader, criterion, optimizer, device):
 
     model.train()
